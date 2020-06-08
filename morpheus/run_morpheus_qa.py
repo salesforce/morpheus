@@ -1,4 +1,4 @@
-from morpheus_qa import MorpheusBertQA, MorpheusBiteBertQA
+from morpheus_qa import MorpheusBertQA #, MorpheusBiteBertQA
 import json, os
 import argparse
 from tqdm import tqdm
@@ -6,7 +6,7 @@ from tqdm import tqdm
 parser.add_argument("--data", "-d", default=None, type=str, required=True, help="The input data file.")
 parser.add_argument("--model", "-m", type=str, required=True)
 parser.add_argument("--output_dir", "-o", default=None, type=str, required=True, help="The output directory.")
-parser.add_argument("--bite", action='store_true', required=False, help="Run on BITE-equipped model.")
+#parser.add_argument("--bite", action='store_true', required=False, help="Run on BITE-equipped model.")
 args = parser.parse_args()
 
 
@@ -14,10 +14,13 @@ dataset = args.data.split('/')[-1].split('.')[0]
 data = json.load(open(args.data))
 total_model_queries = 0
 
+'''
 if args.bite:
     morpheus = MorpheusBiteBertQA(args.model, args.model, squad2=True)
 else:
     morpheus = MorpheusBertQA(args.model, squad2=True)
+'''
+morpheus = MorpheusBertQA(args.model, squad2=True)
 
 for i, article in enumerate(tqdm(data['data'], desc='article', leave=False)):
     para = 0

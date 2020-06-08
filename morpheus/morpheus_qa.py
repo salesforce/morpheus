@@ -1,7 +1,7 @@
 import sys
 sys.path.append("..")
 sys.path.append(".")
-from bite_wordpiece import BiteWordpieceTokenizer
+#from bite_wordpiece import BiteWordpieceTokenizer
 
 from morpheus_base import MorpheusBase
 from abc import abstractmethod
@@ -190,7 +190,7 @@ class MorpheusBertQA(MorpheusQA):
             predicted = ''
         return start_logits, end_logits, predicted
 
-
+'''
 class MorpheusBiteBertQA(MorpheusBertQA):
     def __init__(self, model_path, vocab_path, squad2=True, use_cuda=True):
         self.squad2=squad2
@@ -204,7 +204,7 @@ class MorpheusBiteBertQA(MorpheusBertQA):
         
         self.model.eval()
         self.model.to(self.device)
-
+'''
 
 class MorpheusBidafQA(MorpheusQA):
     def __init__(self, model_path, use_cuda=True, cuda_device=0):

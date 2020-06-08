@@ -1,6 +1,6 @@
 from transformers import glue_processors as processors
-from morpheus_nli import MorpheusBertNLI, MorpheusBiteBertNLI
 import csv, os
+from morpheus_nli import MorpheusBertNLI #, MorpheusBiteBertNLI
 from tqdm import tqdm
 import argparse
 
@@ -35,7 +35,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--data", "-d", default=None, type=str, required=True, help="The input data directory, e.g., 'data/MNLI'.")
 parser.add_argument("--model", "-m", type=str, required=True)
 parser.add_argument("--output_dir", "-o", default=None, type=str, required=True, help="The output directory.")
-parser.add_argument("--bite", action='store_true', required=False, help="Run on BITE-equipped model.")
+#parser.add_argument("--bite", action='store_true', required=False, help="Run on BITE-equipped model.")
 parser.add_argument("--mm", action='store_true', required=False, help="Use Mismatch dev data.")
 args = parser.parse_args()
 
@@ -44,10 +44,13 @@ if args.mm:
 else:
     input_tsv = processors['mnli']()._read_tsv(args.data+'/dev_matched.tsv')
 
+'''
 if args.bite:
     morpheus = MorpheusBiteBertNLI(args.model, args.model)
 else:
     morpheus = MorpheusBertNLI(args.model)
+'''
+morpheus = MorpheusBertNLI(args.model)
 
 if args.mm:
     examples = processors['mnli-mm']().get_dev_examples(args.data)

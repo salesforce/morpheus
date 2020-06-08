@@ -1,7 +1,7 @@
 import sys
 sys.path.append("..")
 sys.path.append(".")
-from bite_wordpiece import BiteWordpieceTokenizer
+#from bite_wordpiece import BiteWordpieceTokenizer
 from morpheus_base import MorpheusBase
 from abc import abstractmethod
 import nltk, torch
@@ -156,7 +156,7 @@ class MorpheusBertNLI(MorpheusNLI):
         logits = outputs[0]
         return logits, self.labels[logits.argmax().item()]
 
-
+'''
 class MorpheusBiteBertNLI(MorpheusBertNLI):
     labels = ["contradiction", "entailment", "neutral"]
     def __init__(self, model_path, vocab_path, use_cuda=True):
@@ -171,3 +171,4 @@ class MorpheusBiteBertNLI(MorpheusBertNLI):
         self.model.eval()
         self.model.to(self.device)
         self.loss_fn = CrossEntropyLoss()
+'''

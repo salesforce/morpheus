@@ -2,7 +2,7 @@
 import sys
 sys.path.append("..")
 sys.path.append(".")
-from base_inflect import BITETokenizer
+#from base_inflect import BITETokenizer
 from morpheus_base import MorpheusBase
 from abc import abstractmethod
 import sacrebleu
@@ -93,7 +93,7 @@ class MorpheusFairseqTransformerNMT(MorpheusNMT):
         if use_cuda and torch.cuda.is_available():
             self.model.cuda()
 
-
+'''
 class MorpheusBiteFairseqTransformerNMT(MorpheusFairseqTransformerNMT):
     def __init__(self, model_dir, model_file, tokenizer='moses', bpe='subword_nmt', use_cuda=True):
         super().__init__(model_dir, model_file, tokenizer, bpe, use_cuda)
@@ -102,3 +102,4 @@ class MorpheusBiteFairseqTransformerNMT(MorpheusFairseqTransformerNMT):
     def get_bleu(self, source, reference, beam=5):
         bite_source = ' '.join(self.bite.tokenize(source))
         return super().get_bleu(bite_source, reference, beam)
+'''
