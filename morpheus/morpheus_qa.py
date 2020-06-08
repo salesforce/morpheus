@@ -3,7 +3,7 @@ sys.path.append("..")
 sys.path.append(".")
 from bite_wordpiece import BiteWordpieceTokenizer
 
-from morpheus import MorpheusBase
+from morpheus_base import MorpheusBase
 from abc import abstractmethod
 import nltk, torch
 from torch.nn import CrossEntropyLoss

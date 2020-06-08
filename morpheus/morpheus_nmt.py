@@ -3,7 +3,7 @@ import sys
 sys.path.append("..")
 sys.path.append(".")
 from base_inflect import BITETokenizer
-from morpheus import MorpheusBase
+from morpheus_base import MorpheusBase
 from abc import abstractmethod
 import sacrebleu
 from fairseq.models.transformer import TransformerModel
