@@ -12,7 +12,21 @@ Morpheus can be easily implemented for a custom task, dataset, or model by follo
 `MorpheusBase` implements the methods common to all Morpheus implementations; `Morpheus<Task>` implements methods common to a specific task/dataset, `Morpheus<Model><Task>` implements methods specific to a particular model (usually the `init` and `morph` methods).
 
 ## Generating adversarial training data
-Coming soon.
+Use `random_inflect/random_inflect.py` to generate adversarial training data. You will need to pass in a dictionary of inflection counts for it to work in the weighted sampling mode, otherwise a uniform distribution will be used. The dictionary should be in the form 
+
+```
+{
+  "inflection tag": int,
+}
+```
+E.g.,
+```
+{
+  "VB": 150,
+  "VBD": 100,
+  ...
+}
+```
 
 # Citation
 ```
