@@ -30,14 +30,18 @@ E.g.,
 
 # Citation
 ```
-@inproceedings{morpheus20,
-  author    = {Samson Tan and Shafiq Joty and Min-Yen Kan and Richard Socher},
-  title     = {It’s {M}orphin’ {T}ime! {C}ombating Linguistic Discrimination with Inflectional Perturbations},
-  booktitle = {Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
-  year      = {2020},
-  address   = {Seattle, Washington},
-  numpages  = {9},
-  publisher = {Association for Computational Linguistics},
-  url       = {https://arxiv.org/abs/2005.04364}
+@inproceedings{tan-etal-2020-morphin,
+    title = "It{'}s Morphin{'} Time! {C}ombating Linguistic Discrimination with Inflectional Perturbations",
+    author = "Tan, Samson  and
+      Joty, Shafiq  and
+      Kan, Min-Yen  and
+      Socher, Richard",
+    booktitle = "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2020.acl-main.263",
+    pages = "2920--2935",
 }
 ```
