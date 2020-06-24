@@ -27,6 +27,11 @@ E.g.,
   ...
 }
 ```
+## Adversarially fine-tuned models
+* [Transformer-big for WMT'14 English-French](https://storage.googleapis.com/sfr-samson-data-research/adv_ft_nmt_enfr_transformer-big.tar.gz): Compatible with `fairseq`
+* [BERT-base for MNLI](https://storage.googleapis.com/sfr-samson-data-research/adv_ft_mnli_BERT-base.tar.gz): Compatible with `transformers`
+* [BERT-base for SQuAD 2](https://storage.googleapis.com/sfr-samson-data-research/adv_ft_squad2_BERT-base.tar.gz): Compatible with `transformers`
+
 
 # Citation
 ```
