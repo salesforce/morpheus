@@ -1,5 +1,5 @@
 # Morpheus
-This repository contains code for the paper "[It's Morphin' Time! Combating Linguistic Discrimination with Inflectional Perturbations](https://arxiv.org/abs/2005.04364)" (to be presented at ACL 2020).
+This repository contains code for the paper "[It's Morphin' Time! Combating Linguistic Discrimination with Inflectional Perturbations](https://www.aclweb.org/anthology/2020.acl-main.263)" (to be presented at ACL 2020).
 
 Authors: [Samson Tan](https://samsontmr.github.io), [Shafiq Joty](https://raihanjoty.github.io), [Min-Yen Kan](https://comp.nus.edu.sg/~kanmy), and [Richard Socher](https://socher.org)
 
