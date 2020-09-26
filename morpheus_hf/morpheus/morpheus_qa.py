@@ -134,7 +134,7 @@ class MorpheusHuggingfaceQA(MorpheusQA):
 
     def morph(self, question_dict, context, constrain_pos=True, conservative=False):
         if not self.squad2 and question_dict.get('is_impossible'):
-            return original, 0
+            raise AssertionError('Not SQuAD 2 but has impossible questions')
         return super().morph(question_dict, context, constrain_pos, conservative)
 
 
