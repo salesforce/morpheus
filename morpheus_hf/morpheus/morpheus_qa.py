@@ -163,9 +163,15 @@ class MorpheusHuggingfaceQA(MorpheusQA):
             qn_ids = qn_ids[:max_query_len]
 
         for i, (char_span_start, char_span_end) in enumerate(question_dict['gold_char_spans']):
+            gold_text = question_dict['gold_texts'][i]
 
-            span_start = len(qn_ids) + num_special_tokens - 2 + len(tokenizer.encode(context[:char_span_start], add_special_tokens=False))
-            span_end = span_start + len(tokenizer.encode(question_dict['gold_texts'][i], add_special_tokens=False)) - 1
+            # Handle SentencePiece tokenizers
+            if context[char_span_start-1] == ' ' and len(tokenizer.encode(context[:char_span_start], add_special_tokens=False)) != len(tokenizer.encode(context[:max(char_span_start-1,0)], add_special_tokens=False)):
+                char_span_start -= 1
+                gold_text = ' ' + gold_text
+
+            span_start = len(qn_ids) + num_special_tokens - 1 + len(tokenizer.encode(context[:char_span_start], add_special_tokens=False))
+            span_end = span_start + len(tokenizer.encode(gold_text, add_special_tokens=False))
 
             if span_start >= max_seq_len:
                 span_start = 0
@@ -178,7 +184,7 @@ class MorpheusHuggingfaceQA(MorpheusQA):
                 max_context_len = max_seq_len - len(qn_ids) - num_special_tokens
                 context_ids = context_ids[:max_context_len]
                 tokens = tokenizer.convert_ids_to_tokens(tokenizer.build_inputs_with_special_tokens(qn_ids, context_ids))
-                question_dict['gold_texts'][i] = tokenizer.convert_tokens_to_string(tokens[span_start:max_seq_len])
+                question_dict['gold_texts'][i] = tokenizer.convert_tokens_to_string(tokens[span_start:max_seq_len]).strip()
 
             token_spans.append((span_start, span_end))
         return token_spans
