@@ -164,7 +164,9 @@ class MorpheusHuggingfaceQA(MorpheusQA):
 
         for i, (char_span_start, char_span_end) in enumerate(question_dict['gold_char_spans']):
             gold_text = question_dict['gold_texts'][i]
-
+            if gold_text == '.':
+                # Ignore garbage annotation
+                continue
             # Handle SentencePiece tokenizers
             if context[char_span_start-1] == ' ' and len(tokenizer.encode(context[:char_span_start], add_special_tokens=False)) != len(tokenizer.encode(context[:max(char_span_start-1,0)], add_special_tokens=False)):
                 char_span_start -= 1
