@@ -7,10 +7,6 @@ from transformers import AutoConfig, AutoTokenizer, AutoModelForSequenceClassifi
 from transformers import BartTokenizer, BartTokenizerFast, RobertaTokenizer, RobertaTokenizerFast, XLMRobertaTokenizer
 from transformers import glue_processors as processors
 
-
-nltk.download('averaged_perceptron_tagger')
-nltk.download('universal_tagset')
-
 '''
 Implements `morph` and `search` methods for the MNLI task. Still an abstract class since
 some key methods will vary depending on the target model.

@@ -1,13 +1,11 @@
 from .morpheus_base import MorpheusBase
 from abc import abstractmethod
-import nltk, torch
+import torch
+import nltk
 from torch.nn import CrossEntropyLoss
 from sacremoses import MosesTokenizer, MosesDetokenizer
 from transformers import AutoConfig, AutoTokenizer, AutoModelForQuestionAnswering
 from .squad_utils import compute_f1
-
-nltk.download('averaged_perceptron_tagger')
-nltk.download('universal_tagset')
 
 '''
 Implements `morph` and search methods for the SQuAD 2 task. Still an abstract class since
