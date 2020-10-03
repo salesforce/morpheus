@@ -37,26 +37,30 @@ class MorpheusNLI(MorpheusBase):
         if init_predicted != label:
             return premise, hypothesis, self.labels[init_predicted], 1
 
-        forward_prem_perturbed, forward_hypo_perturbed, forward_loss, forward_predicted, num_queries_forward = self.search_nli(
-                                                                            prem_token_inflections,
-                                                                            hypo_token_inflections,
-                                                                            orig_prem_tokenized,
-                                                                            orig_hypo_tokenized,
-                                                                            original_loss,
-                                                                            label,
-                                                                            conservative)
+        forward_prem_perturbed, \
+        forward_hypo_perturbed, \
+        forward_loss, forward_predicted, \
+        num_queries_forward = self.search_nli(prem_token_inflections,
+                                              hypo_token_inflections,
+                                              orig_prem_tokenized,
+                                              orig_hypo_tokenized,
+                                              original_loss,
+                                              label,
+                                              conservative)
 
         if conservative and forward_predicted != label:
             return forward_prem_perturbed, forward_hypo_perturbed, self.labels[forward_predicted], num_queries_forward + 1
 
-        backward_prem_perturbed, backward_hypo_perturbed, backward_loss, backward_predicted, num_queries_backward = self.search_nli(
-                                                                            prem_token_inflections,
-                                                                            hypo_token_inflections,
-                                                                            orig_prem_tokenized,
-                                                                            orig_hypo_tokenized,
-                                                                            original_loss,
-                                                                            label,
-                                                                            conservative)
+        backward_prem_perturbed, \
+        backward_hypo_perturbed, \
+        backward_loss, backward_predicted, \
+        num_queries_backward = self.search_nli(prem_token_inflections,
+                                               hypo_token_inflections,
+                                               orig_prem_tokenized,
+                                               orig_hypo_tokenized,
+                                               original_loss,
+                                               label,
+                                               conservative)
 
         num_queries = 1 + num_queries_forward + num_queries_backward
         if forward_loss > backward_loss:

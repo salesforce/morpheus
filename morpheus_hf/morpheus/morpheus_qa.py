@@ -38,23 +38,27 @@ class MorpheusQA(MorpheusBase):
         if self.metric_max(compute_f1, init_predicted, question_dict['gold_texts']) == 0:
             return original, init_predicted, 1
 
-        forward_perturbed, forward_loss, forward_predicted, num_queries_forward = self.search_qa(token_inflections,
-                                                                           orig_tokenized,
-                                                                           original_loss,
-                                                                           question_dict,
-                                                                           context,
-                                                                           conservative)
+        forward_perturbed, \
+        forward_loss, forward_predicted, \
+        num_queries_forward = self.search_qa(token_inflections,
+                                             orig_tokenized,
+                                             original_loss,
+                                             question_dict,
+                                             context,
+                                             conservative)
 
         if conservative and self.metric_max(compute_f1, forward_predicted, question_dict['gold_texts']) == 0:
             return MosesDetokenizer(lang='en').detokenize(forward_perturbed), forward_predicted, num_queries_forward + 1
 
-        backward_perturbed, backward_loss, backward_predicted, num_queries_backward = self.search_qa(token_inflections,
-                                                                              orig_tokenized,
-                                                                              original_loss,
-                                                                              question_dict,
-                                                                              context,
-                                                                              conservative,
-                                                                              backward=True)
+        backward_perturbed, \
+        backward_loss, backward_predicted, \
+        num_queries_backward = self.search_qa(token_inflections,
+                                              orig_tokenized,
+                                              original_loss,
+                                              question_dict,
+                                              context,
+                                              conservative,
+                                              backward=True)
 
 
         num_queries = 1 + num_queries_forward + num_queries_backward
@@ -102,7 +106,8 @@ class MorpheusQA(MorpheusBase):
         #print(start_logits_tensor.shape, end_logits_tensor.shape)
         #print(target_tensors)
         for target_start, target_end in target_tensors:
-            avg_loss = (loss(start_logits_tensor, target_start) + loss(end_logits_tensor, target_end))/2
+            avg_loss = (loss(start_logits_tensor, target_start) \
+                        + loss(end_logits_tensor, target_end))/2
             losses.append(avg_loss)
         return min(losses).item()
 
@@ -141,7 +146,9 @@ class MorpheusHuggingfaceQA(MorpheusQA):
 
     def get_loss(self, question, question_dict, context, max_seq_len=512, max_query_len=64):
         start_logits, end_logits, predicted = self.model_predict(question, context, max_seq_len, max_query_len)
-        question_dict['gold_spans'] = list(set(self.get_gold_token_spans(self.tokenizer, question, question_dict, context, max_seq_len, max_query_len)))
+        question_dict['gold_spans'] = list(set(self.get_gold_token_spans(self.tokenizer, question,
+                                                                         question_dict, context,
+                                                                         max_seq_len, max_query_len)))
 
         return super().get_lowest_loss(start_logits, end_logits, question_dict['gold_spans']), predicted
 
