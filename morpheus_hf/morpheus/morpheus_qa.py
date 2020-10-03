@@ -1,7 +1,8 @@
 from .morpheus_base import MorpheusBase
 from abc import abstractmethod
 import torch
-import nltk
+from nltk.tag.perceptron import PerceptronTagger
+from nltk.tag.mapping import map_tag
 from torch.nn import CrossEntropyLoss
 from sacremoses import MosesTokenizer, MosesDetokenizer
 from transformers import AutoConfig, AutoTokenizer, AutoModelForQuestionAnswering
@@ -12,9 +13,8 @@ Implements `morph` and search methods for the SQuAD 2 task. Still an abstract cl
 some key methods will vary depending on the target model.
 '''
 class MorpheusQA(MorpheusBase):
-    @abstractmethod
     def __init__(self):
-        pass
+        self.tagger = PerceptronTagger()
 
     def morph(self, question_dict, context, constrain_pos=True, conservative=False):
         original = question_dict['question']
@@ -27,7 +27,9 @@ class MorpheusQA(MorpheusBase):
 
         orig_tokenized = MosesTokenizer(lang='en').tokenize(original)
 
-        pos_tagged = [(tagged[0], '.') if '&' in tagged[0] else tagged for tagged in nltk.pos_tag(orig_tokenized,tagset='universal')]
+        pos_tagged = [(token, map_tag("en-ptb", 'universal', tag))
+                      for (token, tag) in self.tagger.tag(orig_tokenized)]
+        pos_tagged = [(tagged[0], '.') if '&' in tagged[0] else tagged for tagged in pos_tagged]
 
         token_inflections = super(MorpheusQA, self).get_inflections(orig_tokenized, pos_tagged, constrain_pos)
 
@@ -129,6 +131,7 @@ class MorpheusHuggingfaceQA(MorpheusQA):
         self.num_special_tokens = len(self.tokenizer.build_inputs_with_special_tokens([],[]))
         self.model.eval()
         self.model.to(self.device)
+        super().__init__()
 
     def morph(self, question_dict, context, constrain_pos=True, conservative=False):
         if not self.squad2 and question_dict.get('is_impossible'):

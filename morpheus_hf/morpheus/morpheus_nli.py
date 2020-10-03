@@ -1,6 +1,8 @@
 from .morpheus_base import MorpheusBase
 from abc import abstractmethod
-import nltk, torch
+import torch
+from nltk.tag.perceptron import PerceptronTagger
+from nltk.tag.mapping import map_tag
 from torch.nn import CrossEntropyLoss
 from sacremoses import MosesTokenizer, MosesDetokenizer
 from transformers import AutoConfig, AutoTokenizer, AutoModelForSequenceClassification
@@ -12,9 +14,8 @@ Implements `morph` and `search` methods for the MNLI task. Still an abstract cla
 some key methods will vary depending on the target model.
 '''
 class MorpheusNLI(MorpheusBase):
-    @abstractmethod
     def __init__(self):
-        pass
+        self.tagger = PerceptronTagger()
 
     def morph(self, premise, hypothesis, label_text, constrain_pos=True, conservative=False):
         assert label_text in self.labels
@@ -22,9 +23,12 @@ class MorpheusNLI(MorpheusBase):
         orig_prem_tokenized = MosesTokenizer(lang='en').tokenize(premise)
         orig_hypo_tokenized = MosesTokenizer(lang='en').tokenize(hypothesis)
 
-
-        prem_pos_tagged = [(tagged[0], '.') if '&' in tagged[0] else tagged for tagged in nltk.pos_tag(orig_prem_tokenized,tagset='universal')]
-        hypo_pos_tagged = [(tagged[0], '.') if '&' in tagged[0] else tagged for tagged in nltk.pos_tag(orig_hypo_tokenized,tagset='universal')]
+        prem_pos_tagged = [(token, map_tag("en-ptb", 'universal', tag))
+                           for (token, tag) in self.tagger.tag(orig_prem_tokenized)]
+        hypo_pos_tagged = [(token, map_tag("en-ptb", 'universal', tag))
+                           for (token, tag) in self.tagger.tag(orig_hypo_tokenized)]
+        prem_pos_tagged = [(tagged[0], '.') if '&' in tagged[0] else tagged for tagged in prem_pos_tagged]
+        hypo_pos_tagged = [(tagged[0], '.') if '&' in tagged[0] else tagged for tagged in hypo_pos_tagged]
 
         prem_token_inflections = super().get_inflections(orig_prem_tokenized, prem_pos_tagged, constrain_pos)
         hypo_token_inflections = super().get_inflections(orig_hypo_tokenized, hypo_pos_tagged, constrain_pos)
@@ -138,7 +142,7 @@ class MorpheusHuggingfaceNLI(MorpheusNLI):
         self.model.eval()
         self.model.to(self.device)
         self.loss_fn = CrossEntropyLoss()
-
+        super().__init__()
 
     def get_loss(self, premise, hypothesis, label, max_seq_len=128):
         logits, _ = self.model_predict(premise, hypothesis, max_seq_len)
