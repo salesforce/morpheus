@@ -4,6 +4,17 @@ This repository contains code for the paper "[It's Morphin' Time! Combating Ling
 Authors: [Samson Tan](https://samsontmr.github.io), [Shafiq Joty](https://raihanjoty.github.io), [Min-Yen Kan](https://comp.nus.edu.sg/~kanmy), and [Richard Socher](https://socher.org)
 
 
+# Supported Tasks
+* NLI (MNLI)
+* Question Answering (SQuAD 1.1, SQuAD 2)
+* Sequence to Sequence (Summarization)
+    * Easily extendable to Machine Translation with [`get_bleu` function](https://github.com/salesforce/morpheus/blob/fcb40ffe855d3363b2fa78f8fbf025dbfb9be1fa/morpheus/morpheus_nmt.py#L82)
+
+
+# Supported Models
+HuggingFace `transformers` models!
+
+
 # Installation
 ```
 pip install -r requirements.txt

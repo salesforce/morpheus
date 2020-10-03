@@ -4,6 +4,9 @@ This repository contains code for the paper "[It's Morphin' Time! Combating Ling
 Authors: [Samson Tan](https://samsontmr.github.io), [Shafiq Joty](https://raihanjoty.github.io), [Min-Yen Kan](https://comp.nus.edu.sg/~kanmy), and [Richard Socher](https://socher.org)
 
 
+**UPDATE:** pip installable library [here](https://github.com/salesforce/morpheus/tree/master/morpheus_hf)!
+
+
 # Usage
 To generate adversarial examples for one of the implemented models, run the corresponding `run_morpheus_*` script.
 
