@@ -17,6 +17,8 @@ HuggingFace `transformers` models!
 
 # Installation
 ```
+git clone https://github.com/salesforce/morpheus.git
+cd morpheus_hf
 pip install -r requirements.txt
 cd morpheus
 pip install .
