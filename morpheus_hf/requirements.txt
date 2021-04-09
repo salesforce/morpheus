@@ -3,3 +3,4 @@ nltk==3.5
 sacremoses==0.0.43
 torch==1.6.0
 transformers==3.2.0
+rouge-score==0.0.4
